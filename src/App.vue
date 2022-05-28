@@ -1,10 +1,11 @@
 <template>
 <div>
   <h1>Witaj w systemie do zapisow na zajeciach</h1>
-     <div v-if="!loggedIn">
-         <label>Zaloguj sie emailem</label>
-         <input type ="text" v-model="email">
-        <button @click ="logMeIn()">Zaloguj sie</button>
+     <div v-if="!email">
+    <login-form @login="enter($event)" button-label="Wejdź"></login-form>
+    <login-form @login="enter($event)" button-label="Wleć"></login-form>
+    <login-form @login="enter($event)" :button-label="Math.random() < 0.5 ? 'Etykieta A' : 'Etykieta B'"></login-form>
+
   </div>
 
   <div v-else>
@@ -16,8 +17,10 @@
 </template>
 
 <script>
-
+import "milligram";
+import LoginForm from "./LoginForm";
 export default {
+components: {LoginForm},
 data(){
   return{
      email:'',
@@ -25,18 +28,17 @@ data(){
   };
 },
 methods: {
- logMeIn(){
- this.loggedIn=true;
-     },
+ logMeIn(username){
+ this.email=username;
+ },
  logOut(){
- this.loggedIn=false;
- this.email=false;
- }
-}
+    this.loggedIn=false;
+    this.email=false;
+    }
+  }
 }
 </script>
 
 <style>
-
 
 </style>
